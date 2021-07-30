@@ -1,0 +1,36 @@
+{
+  "scripts": {
+    "layer0:dev": "layer0 dev",
+    "layer0:build": "layer0 build",
+    "layer0:deploy": "layer0 deploy",
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "export": "next export"
+  },
+  "name": "blog-next-storyblok-layer0-starter",
+  "license": "MIT",
+  "version": "1.0.0",
+  "dependencies": {
+    "@tailwindcss/line-clamp": "^0.2.1",
+    "@tailwindcss/typography": "^0.4.1",
+    "next": "^10.0.0",
+    "preact": "^10.5.13",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "storyblok-js-client": "^2.5.0"
+  },
+  "devDependencies": {
+    "@layer0/cli": "^3.16.2",
+    "@layer0/core": "^3.16.2",
+    "@layer0/devtools": "^3.16.2",
+    "@layer0/next": "^3.16.2",
+    "@layer0/prefetch": "^3.16.2",
+    "@layer0/react": "^3.16.2",
+    "autoprefixer": "^10.2.5",
+    "globby": "^11.0.3",
+    "postcss": "^8.2.10",
+    "prettier": "^2.3.0",
+    "tailwindcss": "^2.1.1"
+  }
+}
