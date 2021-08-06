@@ -31,15 +31,4 @@ module.exports = new Router()
       },
     })
   })
-  .get('/static/:file', ({ cache, serveStatic }) => {
-    cache({
-      browser: {
-        maxAgeSeconds: 60 * 60 * 24 * 365,
-      },
-      edge: {
-        maxAgeSeconds: 60 * 60 * 24 * 365,
-      },
-    })
-    serveStatic('public/static/:file')
-  })
   .use(nextRoutes)
