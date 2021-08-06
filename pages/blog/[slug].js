@@ -1,12 +1,17 @@
-import MorePosts from '@/components/blog/more-posts'
+import {
+  getPost,
+  getNextBlog,
+  getPrevBlog,
+  getAllPostsWithSlug,
+} from '@/lib/api'
 import SEO from '@/components/seo-head'
-import SocialMediaLinks from '@/components/social-media-links'
-import { getAllPostsWithSlug, getPostAndMorePosts } from '@/lib/api'
 import { deploymentUrl } from '@/lib/data'
 import { month, weekday } from '@/lib/operations'
+import MorePosts from '@/components/blog/more-posts'
+import SocialMediaLinks from '@/components/social-media-links'
 import RichTextResolver from 'storyblok-js-client/dist/richTextResolver'
 
-export default function Post({ post, morePosts }) {
+export default function Post({ post, morePosts = [] }) {
   const SEODetails = {
     description: post.content.intro,
     pubDate: post.first_published_at,
@@ -67,7 +72,17 @@ export default function Post({ post, morePosts }) {
 }
 
 export async function getStaticProps({ params }) {
-  const data = await getPostAndMorePosts(params.slug)
+  const data = await getPost(params.slug)
+  const prevBlog = await getPrevBlog(
+    data['post']['first_published_at'],
+    data['post']['full_slug']
+  )
+  if (prevBlog.length > 0) prevBlog[0]['indicator'] = 'Previous'
+  const nextBlog = await getNextBlog(
+    data['post']['first_published_at'],
+    data['post']['full_slug']
+  )
+  if (nextBlog.length > 0) nextBlog[0]['indicator'] = 'Next'
   return {
     props: {
       post: {
@@ -76,7 +91,7 @@ export async function getStaticProps({ params }) {
           ? new RichTextResolver().render(data.post.content.long_text)
           : null,
       },
-      morePosts: data.morePosts,
+      morePosts: [...prevBlog, ...nextBlog],
     },
     revalidate: 1,
   }
